@@ -6,21 +6,77 @@ import Show from './../Show';
 
 const testShow = {
     //add in approprate test data structure here.
+    image: null,
+    name: "show",
+    summary: "This is the summary",
+    seasons: [
+        {
+            episodes: [],
+            id: 1, 
+            name: "season 1"
+        },
+        {
+            episodes: [],
+            id: 2, 
+            name: "season 1"
+        },
+        {
+            episodes: [],
+            id: 3, 
+            name: "season 1"
+        }
+    ]
+
+
 }
 
 test('renders testShow and no selected Season without errors', ()=>{
+    render(<Show show={testShow} selectedSeason={"none"}/>);
 });
 
 test('renders Loading component when prop show is null', () => {
+    //arrange
+    render(<Show show={null} />);
+    //act
+    const loading = screen.getByTestId("loading-container");
+    //assert
+    expect(loading).toBeVisible();
 });
 
 test('renders same number of options seasons are passed in', ()=>{
+    //arrange
+    render(<Show show={testShow} selectedSeason={"none"}/>);
+    //act
+    const seasonsOptions = screen.getAllByTestId("season-option");
+    //assert
+    expect(seasonsOptions).toHaveLength(3);
 });
 
 test('handleSelect is called when an season is selected', () => {
+    //arrange
+    const mockHandleSelect = jest.fn();
+    render(<Show show={testShow} selectedSeason={"none"} handleSelect={mockHandleSelect}/>)
+    const selectingSeason = screen.getByLabelText('Select A Season');
+    //act
+    userEvent.selectOptions(selectingSeason, ['1']);
+    //assert
+    expect(mockHandleSelect).toHaveBeenCalledTimes(1);
 });
 
 test('component renders when no seasons are selected and when rerenders with a season passed in', () => {
+    //arrange
+    const { rerender } = render(<Show show={testShow} selectedSeason={'none'}/>)
+    //act
+    let episodeComponent = screen.queryAllByTestId('episodes-container');
+    //assert
+    expect(episodeComponent).toHaveLength(0);
+
+    //arrange
+    rerender(<Show show={testShow} selectedSeason={1}/>);
+    //act
+    episodeComponent = screen.getAllByTestId('episodes-container');
+    //assert
+    expect(episodeComponent).toHaveLength(1);
 });
 
 //Tasks:
