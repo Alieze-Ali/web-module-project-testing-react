@@ -62,7 +62,7 @@ Get the project fired up and start using it as a user would. Try to go through t
 
 * [x] Test that when the fetch button is pressed, the amount of select options rendered is equal to the amount of seasons in your test data.
 
-* [ ] Notice the optional functional prop passed in to the Display component client code. Test that when the fetch button is pressed, this function is called.
+* [x] Notice the optional functional prop passed in to the Display component client code. Test that when the fetch button is pressed, this function is called.
 
 ### Stretch goals
 
